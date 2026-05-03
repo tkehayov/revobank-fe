@@ -1,16 +1,12 @@
 import { Button } from "@mui/material";
 
-import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import { AccountsApi } from "../../api/accounts";
 import { SnackBar } from "../SnackBar/SnackBar";
 import { HttpStatusCode } from "axios";
-import Switch from "@mui/material/Switch";
 
 export function ChangeStatus({ account, refreshAccount }) {
   const [open, setOpen] = useState(false);
@@ -37,7 +33,6 @@ export function ChangeStatus({ account, refreshAccount }) {
         };
         setSnackBar(snack);
         refreshAccount();
-        return <></>;
       })
       .catch((err) => {
         if (HttpStatusCode.InternalServerError === err.response.status) {

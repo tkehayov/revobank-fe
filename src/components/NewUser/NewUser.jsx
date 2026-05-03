@@ -1,11 +1,8 @@
-import { Box } from "@mui/material";
-
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import { AccountsApi } from "../../api/accounts";
@@ -41,7 +38,6 @@ export function NewUser({ fetchAccounts }) {
         };
         setSnackBar(snack);
         fetchAccounts();
-        return <></>;
       })
       .catch((err) => {
         if (HttpStatusCode.InternalServerError === err.response.status) {

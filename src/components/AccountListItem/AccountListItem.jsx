@@ -2,7 +2,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { EditUser } from "../EditUser/EditUser";
 import { ChangeStatus } from "../ChangeStatus/ChangeStatus";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AccountsApi } from "../../api/accounts";
 
 export function AccountListItem({ account }) {

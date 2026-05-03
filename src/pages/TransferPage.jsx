@@ -1,11 +1,26 @@
-import { Box, Grid } from "@mui/material";
-import { SideNav } from "../components/SideNav/SideNav";
-import { BorderColor } from "@mui/icons-material";
+import { TransfersApi } from "../api/transfers";
+import { TransfersList } from "../components/TransfersList/TransfersList";
+import { useEffect, useState } from "react";
+import { NewTransfer } from "../components/NewTransfer/NewTransfer";
 
 export function TransferPage() {
+  const [transfers, setTransfers] = useState([]);
+
+  async function fetchTransfers() {
+    const transfersResponse = await TransfersApi.fetchTransfers();
+    if (transfersResponse !== 0) {
+      setTransfers(transfersResponse);
+    }
+  }
+
+  useEffect(() => {
+    fetchTransfers();
+  }, []);
+
   return (
     <>
-      <h1>transfer Pages</h1>
+      <NewTransfer fetchTransfers={fetchTransfers} />
+      <TransfersList transfers={transfers} />
     </>
   );
 }

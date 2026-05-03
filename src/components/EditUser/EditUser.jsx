@@ -1,11 +1,10 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import { AccountsApi } from "../../api/accounts";
@@ -27,7 +26,6 @@ export function EditUser({ account, refreshAccount }) {
   function handleClose() {
     setOpen(false);
   }
-  async function editUser() {}
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -45,7 +43,6 @@ export function EditUser({ account, refreshAccount }) {
         };
         setSnackBar(snack);
         refreshAccount();
-        return <></>;
       })
       .catch((err) => {
         if (HttpStatusCode.InternalServerError === err.response.status) {
