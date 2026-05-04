@@ -42,7 +42,7 @@ export function NewTransfer({ fetchTransfers }) {
     setType(event.target.value);
   }
 
-  async function handleSubmit(event) {
+  async function transferSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
@@ -58,12 +58,12 @@ export function NewTransfer({ fetchTransfers }) {
         fetchTransfers();
       })
       .catch((err) => {
-        if (HttpStatusCode.InternalServerError === err.response.status) {
+        if (HttpStatusCode.Conflict === err.response.status) {
           setOpenSnackBar(true);
 
           const snack = {
             severity: "error",
-            message: "Transfer failed",
+            message: err.response.data.message,
           };
           setSnackBar(snack);
         }
@@ -90,7 +90,7 @@ export function NewTransfer({ fetchTransfers }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Transfer</DialogTitle>
         <DialogContent>
-          <form onSubmit={handleSubmit} id="transfer-form">
+          <form onSubmit={transferSubmit} id="transfer-form">
             <InputLabel id="from-label">From Account</InputLabel>
             <Select
               labelId="from-label"

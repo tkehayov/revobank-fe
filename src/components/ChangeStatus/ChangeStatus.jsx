@@ -23,7 +23,7 @@ export function ChangeStatus({ account, refreshAccount }) {
     setOpen(false);
   }
 
-  async function handleSubmit() {
+  async function confirmDialog() {
     await AccountsApi.changeStatus(account.id, !account.status)
       .then((response) => {
         setOpenSnackBar(true);
@@ -35,12 +35,12 @@ export function ChangeStatus({ account, refreshAccount }) {
         refreshAccount();
       })
       .catch((err) => {
-        if (HttpStatusCode.InternalServerError === err.response.status) {
+        if (HttpStatusCode.Conflict === err.response.status) {
           setOpenSnackBar(true);
 
           const snack = {
             severity: "error",
-            message: "Fail changing status",
+            message: err.response.data.message,
           };
           setSnackBar(snack);
         }
@@ -58,7 +58,7 @@ export function ChangeStatus({ account, refreshAccount }) {
         <DialogTitle>Are You Sure?</DialogTitle>
         <DialogActions>
           <Button onClick={handleClose}>NO</Button>
-          <Button type="submit" variant="contained" onClick={handleSubmit}>
+          <Button type="submit" variant="contained" onClick={confirmDialog}>
             Yes
           </Button>
         </DialogActions>

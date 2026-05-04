@@ -24,7 +24,7 @@ export function NewUser({ fetchAccounts }) {
     setOpen(false);
   }
 
-  async function handleSubmit(event) {
+  async function submitNewUser(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
@@ -40,12 +40,12 @@ export function NewUser({ fetchAccounts }) {
         fetchAccounts();
       })
       .catch((err) => {
-        if (HttpStatusCode.InternalServerError === err.response.status) {
+        if (HttpStatusCode.Conflict === err.response.status) {
           setOpenSnackBar(true);
 
           const snack = {
             severity: "error",
-            message: "Fail creating user",
+            message: err.response.data.message,
           };
           setSnackBar(snack);
         }
@@ -61,7 +61,7 @@ export function NewUser({ fetchAccounts }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add User</DialogTitle>
         <DialogContent>
-          <form onSubmit={handleSubmit} id="user-form">
+          <form onSubmit={submitNewUser} id="user-form">
             <TextField
               autoFocus
               required

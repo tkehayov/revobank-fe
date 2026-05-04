@@ -27,7 +27,7 @@ export function EditUser({ account, refreshAccount }) {
     setOpen(false);
   }
 
-  async function handleSubmit(event) {
+  async function editUserSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
@@ -45,12 +45,12 @@ export function EditUser({ account, refreshAccount }) {
         refreshAccount();
       })
       .catch((err) => {
-        if (HttpStatusCode.InternalServerError === err.response.status) {
+        if (HttpStatusCode.Conflict === err.response.status) {
           setOpenSnackBar(true);
 
           const snack = {
             severity: "error",
-            message: "Fail editing user",
+            message: err.response.data.message,
           };
           setSnackBar(snack);
         }
@@ -66,7 +66,7 @@ export function EditUser({ account, refreshAccount }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit User</DialogTitle>
         <DialogContent>
-          <form onSubmit={handleSubmit} id="user-form">
+          <form onSubmit={editUserSubmit} id="user-form">
             <TextField
               autoFocus
               required
